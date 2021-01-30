@@ -36,7 +36,13 @@ while true
     % Create matrices for iteration:
     H = [(posR-navData(:,2:4))./d ones(length(obsData),1)];
     y = rho_nought-rho_c;
-    del_r = (H'*H)\H'*y; % Determine error
+    
+    % Least squares
+    
+    del_r = (H'*H)\H'*y; % Perform least squares optimization
+    
+    %
+    
     r_star = r_star+del_r; % Improve guess
     if norm(del_r) < 10^-8 % Convergence condition
         break
