@@ -39,9 +39,13 @@ while true
     
     % Least squares
     
-    del_r = (H'*H)\H'*y; % Perform least squares optimization
+    %del_r = (H'*H)\H'*y; % Perform least squares optimization
     
     %
+    cvx_begin
+        variable del_r(size(H,2))
+        minimize( norm(H*del_r-y) )
+    cvx_end
     
     r_star = r_star+del_r; % Improve guess
     if norm(del_r) < 10^-8 % Convergence condition
